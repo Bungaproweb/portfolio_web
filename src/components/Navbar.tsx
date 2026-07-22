@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Sun, Moon, FileText, Code2 } from 'lucide-react';
+import { Menu, X, Sun, Moon, FileText, Code2, ShieldCheck } from 'lucide-react';
 import { Profile } from '../types/portfolio';
 
 interface NavbarProps {
@@ -8,6 +8,8 @@ interface NavbarProps {
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
   onOpenResume: () => void;
+  onOpenAdmin: () => void;
+  isAuthenticated: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -15,6 +17,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   darkMode,
   setDarkMode,
   onOpenResume,
+  onOpenAdmin,
+  isAuthenticated,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -134,7 +138,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Right Action Controls */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
+            {/* Admin Panel Button */}
+            <button
+              onClick={onOpenAdmin}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm border ${
+                isAuthenticated
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                  : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/60'
+              }`}
+              title="Panel Admin untuk mengedit konten beranda"
+              id="open-admin-panel-btn"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>{isAuthenticated ? 'Admin Panel' : 'Login Admin'}</span>
+            </button>
+
             {/* Theme Switcher Button */}
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -212,13 +231,28 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               ))}
 
-              <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+              <div className="pt-2 border-t border-gray-200 dark:border-gray-800 space-y-2">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAdmin();
+                  }}
+                  className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all border ${
+                    isAuthenticated
+                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                      : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                  }`}
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>{isAuthenticated ? 'Kelola Beranda (Admin)' : 'Login Admin Panel'}</span>
+                </button>
+
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenResume();
                   }}
-                  className="w-full mt-2 flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-sm shadow-md"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-sm shadow-md"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Lihat & Unduh CV</span>
