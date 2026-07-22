@@ -35,6 +35,7 @@ import {
   SocialLink,
   Testimonial
 } from '../types/portfolio';
+import { formatImageUrl, isGoogleDriveUrl } from '../utils/imageUtils';
 
 interface AdminPanelProps {
   isOpen: boolean;
@@ -809,32 +810,93 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           />
                         </div>
 
+                        {/* Google Drive Info Banner */}
+                        <div className="sm:col-span-2 p-4 rounded-2xl bg-blue-50/80 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/80 flex items-start gap-3">
+                          <div className="p-2 rounded-xl bg-blue-600 text-white shrink-0 mt-0.5 shadow-sm">
+                            <Share2 className="w-4 h-4" />
+                          </div>
+                          <div className="text-xs text-blue-950 dark:text-blue-200 space-y-1">
+                            <div className="font-bold text-sm flex items-center gap-2">
+                              <span>💡 Mendukung Link Gambar Google Drive</span>
+                              <span className="text-[10px] bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-0.5 rounded-full font-semibold">
+                                Auto-Convert
+                              </span>
+                            </div>
+                            <p className="leading-relaxed">
+                              Anda dapat menempelkan link Google Drive (contoh: <code className="bg-blue-100 dark:bg-blue-900/80 px-1.5 py-0.5 rounded text-[11px] font-mono">https://drive.google.com/file/d/1A2B3.../view?usp=sharing</code>). Sistem akan otomatis mengonversinya menjadi URL foto publik.
+                            </p>
+                            <p className="text-blue-700 dark:text-blue-300 font-medium">
+                              ⚠️ Catatan: Pastikan izin berbagi di Google Drive diubah ke <strong>"Siapa saja yang memiliki link" (Anyone with the link)</strong>.
+                            </p>
+                          </div>
+                        </div>
+
                         <div>
                           <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
                             URL Foto Profil (Avatar Hero)
                           </label>
-                          <input
-                            type="text"
-                            value={profileForm.avatarUrl}
-                            onChange={(e) =>
-                              setProfileForm({ ...profileForm, avatarUrl: e.target.value })
-                            }
-                            className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500"
-                          />
+                          <div className="flex gap-2 items-center">
+                            <input
+                              type="text"
+                              value={profileForm.avatarUrl}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setProfileForm({
+                                  ...profileForm,
+                                  avatarUrl: isGoogleDriveUrl(val) ? formatImageUrl(val) : val,
+                                });
+                              }}
+                              placeholder="https://drive.google.com/file/d/... atau https://..."
+                              className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500"
+                            />
+                            {profileForm.avatarUrl && (
+                              <img
+                                src={formatImageUrl(profileForm.avatarUrl)}
+                                alt="Avatar Preview"
+                                className="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 bg-gray-900"
+                                referrerPolicy="no-referrer"
+                              />
+                            )}
+                          </div>
+                          {isGoogleDriveUrl(profileForm.avatarUrl) && (
+                            <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 flex items-center gap-1">
+                              <Check className="w-3 h-3" /> Link Google Drive terdeteksi & terkonversi
+                            </p>
+                          )}
                         </div>
 
                         <div>
                           <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
                             URL Foto Seksi Tentang (About Image)
                           </label>
-                          <input
-                            type="text"
-                            value={profileForm.aboutImageUrl}
-                            onChange={(e) =>
-                              setProfileForm({ ...profileForm, aboutImageUrl: e.target.value })
-                            }
-                            className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500"
-                          />
+                          <div className="flex gap-2 items-center">
+                            <input
+                              type="text"
+                              value={profileForm.aboutImageUrl}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setProfileForm({
+                                  ...profileForm,
+                                  aboutImageUrl: isGoogleDriveUrl(val) ? formatImageUrl(val) : val,
+                                });
+                              }}
+                              placeholder="https://drive.google.com/file/d/... atau https://..."
+                              className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500"
+                            />
+                            {profileForm.aboutImageUrl && (
+                              <img
+                                src={formatImageUrl(profileForm.aboutImageUrl)}
+                                alt="About Image Preview"
+                                className="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 bg-gray-900"
+                                referrerPolicy="no-referrer"
+                              />
+                            )}
+                          </div>
+                          {isGoogleDriveUrl(profileForm.aboutImageUrl) && (
+                            <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 flex items-center gap-1">
+                              <Check className="w-3 h-3" /> Link Google Drive terdeteksi & terkonversi
+                            </p>
+                          )}
                         </div>
 
                         <div className="sm:col-span-2">
@@ -1334,17 +1396,36 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
                           <div className="sm:col-span-2">
                             <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                              URL Sampul Gambar Proyek
+                              URL Sampul Gambar Proyek (Mendukung Link Google Drive)
                             </label>
-                            <input
-                              type="text"
-                              value={projectForm.imageUrl || ''}
-                              onChange={(e) =>
-                                setProjectForm({ ...projectForm, imageUrl: e.target.value })
-                              }
-                              placeholder="https://images.unsplash.com/photo-..."
-                              className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                            />
+                            <div className="flex gap-2 items-center">
+                              <input
+                                type="text"
+                                value={projectForm.imageUrl || ''}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setProjectForm({
+                                    ...projectForm,
+                                    imageUrl: isGoogleDriveUrl(val) ? formatImageUrl(val) : val,
+                                  });
+                                }}
+                                placeholder="https://drive.google.com/file/d/... atau https://..."
+                                className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
+                              />
+                              {projectForm.imageUrl && (
+                                <img
+                                  src={formatImageUrl(projectForm.imageUrl)}
+                                  alt="Project Preview"
+                                  className="w-12 h-9 rounded-lg object-cover border border-gray-200 dark:border-gray-700 shrink-0 bg-gray-900"
+                                  referrerPolicy="no-referrer"
+                                />
+                              )}
+                            </div>
+                            {isGoogleDriveUrl(projectForm.imageUrl || '') && (
+                              <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 flex items-center gap-1">
+                                <Check className="w-3 h-3" /> Link Google Drive terdeteksi & terkonversi
+                              </p>
+                            )}
                           </div>
 
                           <div className="sm:col-span-2">
@@ -1727,20 +1808,36 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
                           <div className="sm:col-span-2">
                             <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                              URL Foto Avatar Klien
+                              URL Foto Avatar Klien (Mendukung Link Google Drive)
                             </label>
-                            <input
-                              type="text"
-                              value={testimonialForm.avatarUrl || ''}
-                              onChange={(e) =>
-                                setTestimonialForm({
-                                  ...testimonialForm,
-                                  avatarUrl: e.target.value,
-                                })
-                              }
-                              placeholder="https://images.unsplash.com/..."
-                              className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                            />
+                            <div className="flex gap-2 items-center">
+                              <input
+                                type="text"
+                                value={testimonialForm.avatarUrl || ''}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setTestimonialForm({
+                                    ...testimonialForm,
+                                    avatarUrl: isGoogleDriveUrl(val) ? formatImageUrl(val) : val,
+                                  });
+                                }}
+                                placeholder="https://drive.google.com/file/d/... atau https://..."
+                                className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
+                              />
+                              {testimonialForm.avatarUrl && (
+                                <img
+                                  src={formatImageUrl(testimonialForm.avatarUrl)}
+                                  alt="Testimonial Avatar Preview"
+                                  className="w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700 shrink-0 bg-gray-900"
+                                  referrerPolicy="no-referrer"
+                                />
+                              )}
+                            </div>
+                            {isGoogleDriveUrl(testimonialForm.avatarUrl || '') && (
+                              <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 flex items-center gap-1">
+                                <Check className="w-3 h-3" /> Link Google Drive terdeteksi & terkonversi
+                              </p>
+                            )}
                           </div>
 
                           <div className="sm:col-span-2">
@@ -1802,9 +1899,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         >
                           <div className="flex items-center gap-3">
                             <img
-                              src={t.avatarUrl}
+                              src={formatImageUrl(t.avatarUrl)}
                               alt={t.name}
-                              className="w-10 h-10 rounded-full object-cover"
+                              className="w-10 h-10 rounded-full object-cover shrink-0 border border-gray-200 dark:border-gray-700 bg-gray-900"
+                              referrerPolicy="no-referrer"
                             />
                             <div>
                               <h5 className="font-bold text-sm text-gray-900 dark:text-white">
@@ -1846,6 +1944,92 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       <p className="text-xs text-gray-500 dark:text-gray-400">
                         Ubah email dan kata sandi login admin, atau reset seluruh data beranda ke bawaan pabrik.
                       </p>
+                    </div>
+
+                    {/* Google Drive Link Tester & Direct Link Generator Widget */}
+                    <div className="p-5 bg-gradient-to-tr from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-2xl border border-blue-200/80 dark:border-blue-800/80 shadow-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Share2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                          Alat Penguji & Konverter Link Foto Google Drive
+                        </h4>
+                      </div>
+                      <p className="text-xs text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                        Tempelkan link berbagi Google Drive di bawah untuk menguji konversi link langsung dan melihat pratinjau gambarnya secara instan.
+                      </p>
+
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                            Tempel Link Google Drive (misal: view/sharing link)
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="https://drive.google.com/file/d/1234567890ABCDEF/view?usp=sharing"
+                            className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-blue-500"
+                            id="gdrive-test-input"
+                            onChange={(e) => {
+                              const el = document.getElementById('gdrive-test-result') as HTMLInputElement;
+                              if (el) {
+                                el.value = formatImageUrl(e.target.value);
+                              }
+                              const imgEl = document.getElementById('gdrive-test-img') as HTMLImageElement;
+                              if (imgEl) {
+                                imgEl.src = formatImageUrl(e.target.value);
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                            Hasil URL Gambar Langsung (Direct CDN Image URL)
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              id="gdrive-test-result"
+                              readOnly
+                              placeholder="Hasil URL gambar langsung akan muncul di sini..."
+                              className="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-xs font-mono select-all"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const el = document.getElementById('gdrive-test-result') as HTMLInputElement;
+                                if (el && el.value) {
+                                  navigator.clipboard.writeText(el.value);
+                                  showToast('Link gambar langsung berhasil disalin!');
+                                }
+                              }}
+                              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 transition-colors shadow-sm"
+                            >
+                              Salin Link
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-blue-200/60 dark:border-blue-800/60 flex items-center gap-4">
+                          <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                            Pratinjau Hasil Gambar:
+                          </span>
+                          <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-blue-300 dark:border-blue-700 bg-gray-900 shadow-sm flex items-center justify-center shrink-0">
+                            <img
+                              id="gdrive-test-img"
+                              src=""
+                              alt="Gdrive Test Preview"
+                              className="w-full h-full object-cover"
+                              referrerPolicy="no-referrer"
+                              onError={(e) => {
+                                (e.target as HTMLElement).style.display = 'none';
+                              }}
+                              onLoad={(e) => {
+                                (e.target as HTMLElement).style.display = 'block';
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Change Credentials Form */}

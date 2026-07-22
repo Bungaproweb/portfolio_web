@@ -13,6 +13,7 @@ import {
   MonitorPlay,
 } from 'lucide-react';
 import { Project } from '../types/portfolio';
+import { formatImageUrl } from '../utils/imageUtils';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -69,7 +70,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           <div className="space-y-3">
             <div className="relative rounded-2xl overflow-hidden bg-gray-950 border border-gray-200 dark:border-gray-800 aspect-video shadow-lg">
               <img
-                src={selectedImg}
+                src={formatImageUrl(selectedImg)}
                 alt={project.title}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
@@ -90,7 +91,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     }`}
                   >
                     <img
-                      src={img}
+                      src={formatImageUrl(img)}
                       alt="Thumbnail"
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"

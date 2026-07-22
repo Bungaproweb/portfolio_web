@@ -13,6 +13,7 @@ import {
   Award,
 } from 'lucide-react';
 import { Profile } from '../types/portfolio';
+import { formatImageUrl } from '../utils/imageUtils';
 
 interface HeroProps {
   profile: Profile;
@@ -176,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenResume }) => {
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 rotate-6 blur-lg opacity-70 animate-pulse" />
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white dark:border-gray-800 shadow-2xl bg-gray-900">
                 <img
-                  src={profile.avatarUrl}
+                  src={formatImageUrl(profile.avatarUrl)}
                   alt={profile.name}
                   className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"

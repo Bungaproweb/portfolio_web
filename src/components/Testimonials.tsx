@@ -1,6 +1,7 @@
 import React from 'react';
 import { Quote, Star, MessageSquare } from 'lucide-react';
 import { Testimonial } from '../types/portfolio';
+import { formatImageUrl } from '../utils/imageUtils';
 
 interface TestimonialsProps {
   testimonials: Testimonial[];
@@ -47,7 +48,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
 
               <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <img
-                  src={item.avatarUrl}
+                  src={formatImageUrl(item.avatarUrl)}
                   alt={item.name}
                   className="w-11 h-11 rounded-full object-cover border-2 border-blue-500"
                   referrerPolicy="no-referrer"

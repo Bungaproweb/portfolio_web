@@ -19,6 +19,7 @@ import {
   Education,
   Certification,
 } from '../types/portfolio';
+import { formatImageUrl } from '../utils/imageUtils';
 
 interface AboutProps {
   profile: Profile;
@@ -84,7 +85,7 @@ export const About: React.FC<AboutProps> = ({
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-100 dark:border-gray-800 bg-gray-900 group">
               <img
-                src={profile.aboutImageUrl}
+                src={formatImageUrl(profile.aboutImageUrl)}
                 alt="Working Alex Pratama"
                 className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"

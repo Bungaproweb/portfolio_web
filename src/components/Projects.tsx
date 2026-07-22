@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Project } from '../types/portfolio';
 import { ProjectModal } from './ProjectModal';
+import { formatImageUrl } from '../utils/imageUtils';
 
 interface ProjectsProps {
   projects: Project[];
@@ -135,7 +136,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, onOpenLivePreview 
                     {/* Thumbnail Header */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-gray-950">
                       <img
-                        src={project.imageUrl}
+                        src={formatImageUrl(project.imageUrl)}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         referrerPolicy="no-referrer"
