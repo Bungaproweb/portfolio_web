@@ -8,9 +8,12 @@ import {
   CheckCircle,
   Sparkles,
   ExternalLink,
-  Code,
-  Zap,
-  ShieldCheck,
+  Film,
+  Palette,
+  Volume2,
+  Scissors,
+  Wand2,
+  Clock,
   HeartHandshake,
 } from 'lucide-react';
 import {
@@ -38,24 +41,24 @@ export const About: React.FC<AboutProps> = ({
 
   const coreValues = [
     {
-      icon: <Zap className="w-5 h-5 text-amber-500" />,
-      title: 'Performa Tinggi & Cepat',
-      desc: 'Setiap baris kode dioptimalkan untuk meminimalkan waktu muat, menjamin skenario rendering tercepat.',
+      icon: <Scissors className="w-5 h-5 text-amber-500" />,
+      title: 'Visual Storytelling & Pacing Presisi',
+      desc: 'Menyusun potongan gambar dengan ritme dan emosi yang tepat untuk membangun narasi kuat serta mempertahankan retensi penonton.',
     },
     {
-      icon: <Code className="w-5 h-5 text-blue-500" />,
-      title: 'Kode Bersih & Modul',
-      desc: 'Arsitektur komponen modular dengan TypeScript strict typing untuk mempermudah pemeliharaan jangka panjang.',
+      icon: <Palette className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
+      title: 'Color Grading & Mood Sinematik',
+      desc: 'Pengolahan warna profesional (LOG/Rec.709) untuk menciptakan nuansa visual yang konsisten, estetis, dan kaya emosi.',
     },
     {
-      icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />,
-      title: 'Aksesibilitas & Standards',
-      desc: 'Memastikan aplikasi ramah pengguna, memenuhi standar WCAG, dan berfungsi mulus di semua ukuran layar.',
+      icon: <Volume2 className="w-5 h-5 text-amber-500" />,
+      title: 'Audio Mixing & Sound Design Imersif',
+      desc: 'Penataan dialog jernih, keseimbangan musik latar, dan efek suara (Foley/SFX) mendetail demi meningkatkan kualitas atmosfer video.',
     },
     {
-      icon: <HeartHandshake className="w-5 h-5 text-rose-500" />,
-      title: 'Kolaborasi & Komunikasi',
-      desc: 'Penyampaian progres kerja yang terstruktur, siap berdiskusi dengan desainer, PM, dan engineer backend.',
+      icon: <Wand2 className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
+      title: 'Motion Graphics & VFX Kreatif',
+      desc: 'Integrasi animasi teks, transisi seamless, dan efek visual yang menarik untuk memberikan nilai tambah pada setiap karya video.',
     },
   ];
 
@@ -75,7 +78,7 @@ export const About: React.FC<AboutProps> = ({
             Mengenal Lebih Dekat Latar Belakang & Passion Saya
           </h2>
           <p className="mt-4 text-base sm:text-lg text-stone-600 dark:text-stone-400">
-            Menggabungkan keahlian teknis pemrograman frontend dan kepekaan desain antarmuka untuk menciptakan pengalaman web yang memukau.
+            Menggabungkan ritme visual dinamis, teknik editing presisi, dan perancangan audio-visual sinematik untuk menyampaikan narasi cerita yang berkesan.
           </p>
         </div>
 
