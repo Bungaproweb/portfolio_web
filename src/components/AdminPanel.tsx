@@ -108,7 +108,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
   // Tab State
   const [activeTab, setActiveTab] = useState<
-    'profile' | 'skills' | 'projects' | 'experiences' | 'testimonials' | 'socials' | 'security'
+    'profile' | 'skills' | 'projects' | 'experiences' | 'education' | 'certifications' | 'testimonials' | 'socials' | 'security'
   >('profile');
 
   // Form Feedback
@@ -607,6 +607,106 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   // ----------------------------------------------------
+  // EDUCATION STATE & HANDLERS
+  // ----------------------------------------------------
+  const [editingEduId, setEditingEduId] = useState<string | null>(null);
+  const [eduForm, setEduForm] = useState<Partial<Education>>({
+    degree: '',
+    institution: '',
+    period: '',
+    description: '',
+  });
+
+  const handleSaveEducation = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!eduForm.degree?.trim() || !eduForm.institution?.trim()) return;
+
+    if (editingEduId) {
+      setEducation((prev) =>
+        prev.map((edu) =>
+          edu.id === editingEduId ? ({ ...edu, ...eduForm } as Education) : edu
+        )
+      );
+      showToast('Data pendidikan berhasil diperbarui!');
+    } else {
+      const newEdu: Education = {
+        id: 'edu_' + Date.now(),
+        degree: eduForm.degree || 'Gelar',
+        institution: eduForm.institution || 'Institusi / Universitas',
+        period: eduForm.period || '2019 - 2023',
+        description: eduForm.description || '',
+      };
+      setEducation((prev) => [newEdu, ...prev]);
+      showToast('Pendidikan baru berhasil ditambahkan!');
+    }
+
+    setEditingEduId(null);
+    setEduForm({
+      degree: '',
+      institution: '',
+      period: '',
+      description: '',
+    });
+  };
+
+  const handleDeleteEducation = (id: string) => {
+    if (confirm('Hapus data pendidikan ini?')) {
+      setEducation((prev) => prev.filter((e) => e.id !== id));
+      showToast('Data pendidikan dihapus.');
+    }
+  };
+
+  // ----------------------------------------------------
+  // CERTIFICATIONS STATE & HANDLERS
+  // ----------------------------------------------------
+  const [editingCertId, setEditingCertId] = useState<string | null>(null);
+  const [certForm, setCertForm] = useState<Partial<Certification>>({
+    name: '',
+    issuer: '',
+    year: '',
+    credentialUrl: '',
+  });
+
+  const handleSaveCertification = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!certForm.name?.trim()) return;
+
+    if (editingCertId) {
+      setCertifications((prev) =>
+        prev.map((cert) =>
+          cert.id === editingCertId ? ({ ...cert, ...certForm } as Certification) : cert
+        )
+      );
+      showToast('Data sertifikat berhasil diperbarui!');
+    } else {
+      const newCert: Certification = {
+        id: 'cert_' + Date.now(),
+        name: certForm.name || 'Nama Sertifikat',
+        issuer: certForm.issuer || 'Penerbit Sertifikat',
+        year: certForm.year || '2024',
+        credentialUrl: certForm.credentialUrl || '',
+      };
+      setCertifications((prev) => [newCert, ...prev]);
+      showToast('Sertifikat baru berhasil ditambahkan!');
+    }
+
+    setEditingCertId(null);
+    setCertForm({
+      name: '',
+      issuer: '',
+      year: '',
+      credentialUrl: '',
+    });
+  };
+
+  const handleDeleteCertification = (id: string) => {
+    if (confirm('Hapus sertifikat ini?')) {
+      setCertifications((prev) => prev.filter((c) => c.id !== id));
+      showToast('Sertifikat dihapus.');
+    }
+  };
+
+  // ----------------------------------------------------
   // TESTIMONIALS STATE
   // ----------------------------------------------------
   const [editingTestimonialId, setEditingTestimonialId] = useState<string | null>(null);
@@ -889,8 +989,34 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   }`}
                   id="tab-experiences"
                 >
-                  <GraduationCap className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                  <Briefcase className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Pengalaman ({experiences.length})</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('education')}
+                  className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
+                    activeTab === 'education'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
+                  }`}
+                  id="tab-education"
+                >
+                  <GraduationCap className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                  <span>Pendidikan ({education.length})</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('certifications')}
+                  className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
+                    activeTab === 'certifications'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
+                  }`}
+                  id="tab-certifications"
+                >
+                  <Award className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                  <span>Sertifikat ({certifications.length})</span>
                 </button>
 
                 <button
@@ -2124,6 +2250,327 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             <button
                               onClick={() => handleDeleteExperience(x.id)}
                               className="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ---------------- EDUCATION TAB ---------------- */}
+                {activeTab === 'education' && (
+                  <div>
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+                        Pendidikan Formal
+                      </h3>
+                      <p className="text-xs text-stone-500 dark:text-stone-400">
+                        Kelola riwayat pendidikan formal (gelar, universitas, & periode) yang ditampilkan di section Tentang Saya.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-stone-100/70 dark:bg-stone-900/60 rounded-2xl border border-stone-200 dark:border-stone-800 mb-6">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-1.5">
+                        <GraduationCap className="w-4 h-4" />
+                        <span>{editingEduId ? 'Edit Pendidikan' : 'Tambah Pendidikan Baru'}</span>
+                      </h4>
+
+                      <form onSubmit={handleSaveEducation} className="space-y-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Gelar / Jurusan
+                            </label>
+                            <input
+                              type="text"
+                              value={eduForm.degree || ''}
+                              onChange={(e) =>
+                                setEduForm({ ...eduForm, degree: e.target.value })
+                              }
+                              placeholder="cth: S1 Teknik Informatika"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Institusi / Universitas
+                            </label>
+                            <input
+                              type="text"
+                              value={eduForm.institution || ''}
+                              onChange={(e) =>
+                                setEduForm({ ...eduForm, institution: e.target.value })
+                              }
+                              placeholder="cth: Universitas Gadjah Mada"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                              required
+                            />
+                          </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Periode Studi
+                            </label>
+                            <input
+                              type="text"
+                              value={eduForm.period || ''}
+                              onChange={(e) =>
+                                setEduForm({ ...eduForm, period: e.target.value })
+                              }
+                              placeholder="cth: 2019 - 2023"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                            />
+                          </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Deskripsi Singkat / Catatan (Opsional)
+                            </label>
+                            <textarea
+                              rows={2}
+                              value={eduForm.description || ''}
+                              onChange={(e) =>
+                                setEduForm({ ...eduForm, description: e.target.value })
+                              }
+                              placeholder="cth: Lulus dengan predikat Cum Laude. Fokus pada studi Web Development & Rekayasa Perangkat Lunak."
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-2 pt-1">
+                          {editingEduId && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingEduId(null);
+                                setEduForm({
+                                  degree: '',
+                                  institution: '',
+                                  period: '',
+                                  description: '',
+                                });
+                              }}
+                              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-600 dark:text-stone-400"
+                            >
+                              Batal
+                            </button>
+                          )}
+                          <button
+                            type="submit"
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 font-semibold text-xs shadow-xs"
+                          >
+                            <Plus className="w-4 h-4" />
+                            <span>
+                              {editingEduId ? 'Update Pendidikan' : 'Tambah Pendidikan'}
+                            </span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="space-y-2 max-h-72 overflow-y-auto">
+                      {education.map((e) => (
+                        <div
+                          key={e.id}
+                          className="p-3.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl flex items-center justify-between"
+                        >
+                          <div>
+                            <h5 className="font-bold text-sm text-stone-900 dark:text-white">
+                              {e.degree}
+                            </h5>
+                            <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                              {e.institution} • {e.period}
+                            </p>
+                            {e.description && (
+                              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1 line-clamp-2">
+                                {e.description}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <button
+                              onClick={() => {
+                                setEditingEduId(e.id);
+                                setEduForm(e);
+                              }}
+                              className="p-1.5 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 rounded-lg"
+                              title="Edit Pendidikan"
+                            >
+                              <Edit3 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteEducation(e.id)}
+                              className="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg"
+                              title="Hapus Pendidikan"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ---------------- CERTIFICATIONS TAB ---------------- */}
+                {activeTab === 'certifications' && (
+                  <div>
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+                        Sertifikasi & Lisensi Profesional
+                      </h3>
+                      <p className="text-xs text-stone-500 dark:text-stone-400">
+                        Kelola daftar sertifikat dan bukti kompetensi profesional yang muncul di section Tentang Saya.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-stone-100/70 dark:bg-stone-900/60 rounded-2xl border border-stone-200 dark:border-stone-800 mb-6">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-1.5">
+                        <Award className="w-4 h-4" />
+                        <span>{editingCertId ? 'Edit Sertifikat' : 'Tambah Sertifikat Baru'}</span>
+                      </h4>
+
+                      <form onSubmit={handleSaveCertification} className="space-y-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Nama Sertifikat / Lisensi
+                            </label>
+                            <input
+                              type="text"
+                              value={certForm.name || ''}
+                              onChange={(e) =>
+                                setCertForm({ ...certForm, name: e.target.value })
+                              }
+                              placeholder="cth: Meta Front-End Developer Professional Certificate"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Penerbit / Penyelenggara
+                            </label>
+                            <input
+                              type="text"
+                              value={certForm.issuer || ''}
+                              onChange={(e) =>
+                                setCertForm({ ...certForm, issuer: e.target.value })
+                              }
+                              placeholder="cth: Coursera / Meta"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              Tahun Perolehan
+                            </label>
+                            <input
+                              type="text"
+                              value={certForm.year || ''}
+                              onChange={(e) =>
+                                setCertForm({ ...certForm, year: e.target.value })
+                              }
+                              placeholder="cth: 2024"
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                              URL Kredensial / Bukti Sertifikat (Opsional)
+                            </label>
+                            <input
+                              type="text"
+                              value={certForm.credentialUrl || ''}
+                              onChange={(e) =>
+                                setCertForm({ ...certForm, credentialUrl: e.target.value })
+                              }
+                              placeholder="https://coursera.org/verify/..."
+                              className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-sm"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-2 pt-1">
+                          {editingCertId && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingCertId(null);
+                                setCertForm({
+                                  name: '',
+                                  issuer: '',
+                                  year: '',
+                                  credentialUrl: '',
+                                });
+                              }}
+                              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-600 dark:text-stone-400"
+                            >
+                              Batal
+                            </button>
+                          )}
+                          <button
+                            type="submit"
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 font-semibold text-xs shadow-xs"
+                          >
+                            <Plus className="w-4 h-4" />
+                            <span>
+                              {editingCertId ? 'Update Sertifikat' : 'Tambah Sertifikat'}
+                            </span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="space-y-2 max-h-72 overflow-y-auto">
+                      {certifications.map((c) => (
+                        <div
+                          key={c.id}
+                          className="p-3.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl flex items-center justify-between"
+                        >
+                          <div>
+                            <h5 className="font-bold text-sm text-stone-900 dark:text-white">
+                              {c.name}
+                            </h5>
+                            <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                              {c.issuer} • {c.year}
+                            </p>
+                            {c.credentialUrl && (
+                              <a
+                                href={c.credentialUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[11px] text-amber-600 underline truncate block max-w-md mt-0.5"
+                              >
+                                {c.credentialUrl}
+                              </a>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <button
+                              onClick={() => {
+                                setEditingCertId(c.id);
+                                setCertForm(c);
+                              }}
+                              className="p-1.5 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/50 rounded-lg"
+                              title="Edit Sertifikat"
+                            >
+                              <Edit3 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteCertification(c.id)}
+                              className="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg"
+                              title="Hapus Sertifikat"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>

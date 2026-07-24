@@ -4,7 +4,6 @@ import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
-import { Testimonials } from './components/Testimonials';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
@@ -371,9 +370,6 @@ export default function App() {
           projects={projects}
           onOpenLivePreview={(project) => setLivePreviewProject(project)}
         />
-
-        {/* Testimonials Section */}
-        <Testimonials testimonials={testimonials} />
 
         {/* Contact Section */}
         <Contact
