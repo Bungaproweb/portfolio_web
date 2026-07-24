@@ -1,0 +1,21 @@
+{
+  "entities": {
+    "PortfolioContent": {
+      "title": "Portfolio Content",
+      "description": "Homepage portfolio content including profile, skills, projects, experiences, and testimonials",
+      "type": "object",
+      "properties": {
+        "profile": { "type": "object", "description": "Profile info" },
+        "skills": { "type": "array", "description": "List of skills" },
+        "projects": { "type": "array", "description": "List of projects" },
+        "experiences": { "type": "array", "description": "List of work experiences" },
+        "education": { "type": "array", "description": "List of education" },
+        "certifications": { "type": "array", "description": "List of certifications" },
+        "socialLinks": { "type": "array", "description": "List of social links" },
+        "testimonials": { "type": "array", "description": "List of testimonials" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["profile", "skills", "projects"]
+    }
+  }
+}
