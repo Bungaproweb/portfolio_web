@@ -60,12 +60,28 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
     }
   };
 
-  const categories = [
+  const baseCategories = [
     { id: 'all', label: 'Semua Keahlian' },
     { id: 'frontend', label: 'Frontend' },
     { id: 'backend', label: 'Backend' },
     { id: 'design', label: 'Design & UI/UX' },
     { id: 'tools', label: 'Tools & DevOps' },
+  ];
+
+  // Dynamically extract any custom categories present in skills prop
+  const customCategoryMap = new Map<string, string>();
+  skills.forEach((s) => {
+    if (s.category && !baseCategories.some((c) => c.id === s.category)) {
+      customCategoryMap.set(s.category, s.categoryLabel || s.category);
+    }
+  });
+
+  const categories = [
+    ...baseCategories,
+    ...Array.from(customCategoryMap.entries()).map(([id, label]) => ({
+      id,
+      label,
+    })),
   ];
 
   const filteredSkills =

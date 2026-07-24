@@ -23,7 +23,9 @@ import {
   Layers,
   AlertCircle,
   Eye,
-  EyeOff
+  EyeOff,
+  FolderPlus,
+  Tag
 } from 'lucide-react';
 import {
   Profile,
@@ -181,8 +183,91 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   // ----------------------------------------------------
-  // SKILLS EDIT FORM STATE
+  // SKILLS & CATEGORIES EDIT FORM STATE
   // ----------------------------------------------------
+  const defaultCategoriesList = [
+    { id: 'frontend', label: 'Frontend' },
+    { id: 'backend', label: 'Backend' },
+    { id: 'design', label: 'Design & UI/UX' },
+    { id: 'tools', label: 'Tools & DevOps' },
+  ];
+
+  const [customCategories, setCustomCategories] = useState<{ id: string; label: string }[]>(() => {
+    const saved = localStorage.getItem('portfolio_custom_skill_categories');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed parsing custom categories', e);
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('portfolio_custom_skill_categories', JSON.stringify(customCategories));
+  }, [customCategories]);
+
+  const allCategories = React.useMemo(() => {
+    const map = new Map<string, string>();
+    defaultCategoriesList.forEach((c) => map.set(c.id, c.label));
+    customCategories.forEach((c) => map.set(c.id, c.label));
+    skills.forEach((s) => {
+      if (s.category && !map.has(s.category)) {
+        map.set(s.category, s.categoryLabel || s.category);
+      }
+    });
+    return Array.from(map.entries()).map(([id, label]) => ({ id, label }));
+  }, [customCategories, skills]);
+
+  const [isAddingNewCategory, setIsAddingNewCategory] = useState(false);
+  const [newCategoryInput, setNewCategoryInput] = useState('');
+
+  const handleAddCategory = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!newCategoryInput.trim()) return;
+
+    const label = newCategoryInput.trim();
+    const catId = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ('cat_' + Date.now());
+
+    const exists = allCategories.some(
+      (c) => c.id === catId || c.label.toLowerCase() === label.toLowerCase()
+    );
+
+    if (exists) {
+      const existingCat = allCategories.find(
+        (c) => c.id === catId || c.label.toLowerCase() === label.toLowerCase()
+      );
+      showToast(`Kategori "${label}" sudah ada.`);
+      setSkillForm((prev) => ({
+        ...prev,
+        category: existingCat?.id || catId,
+        categoryLabel: existingCat?.label || label,
+      }));
+      setNewCategoryInput('');
+      setIsAddingNewCategory(false);
+      return;
+    }
+
+    const newCat = { id: catId, label };
+    setCustomCategories((prev) => [...prev, newCat]);
+    setSkillForm((prev) => ({
+      ...prev,
+      category: catId,
+      categoryLabel: label,
+    }));
+    setNewCategoryInput('');
+    setIsAddingNewCategory(false);
+    showToast(`Kategori baru "${label}" berhasil ditambahkan!`);
+  };
+
+  const handleDeleteCustomCategory = (catId: string, catLabel: string) => {
+    if (confirm(`Hapus kategori "${catLabel}"? Keahlian dengan kategori ini tetap tersimpan.`)) {
+      setCustomCategories((prev) => prev.filter((c) => c.id !== catId));
+      showToast(`Kategori "${catLabel}" telah dihapus.`);
+    }
+  };
+
   const [editingSkillId, setEditingSkillId] = useState<string | null>(null);
   const [skillForm, setSkillForm] = useState<Partial<Skill>>({
     name: '',
@@ -199,11 +284,20 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     e.preventDefault();
     if (!skillForm.name?.trim()) return;
 
+    const catId = skillForm.category || 'frontend';
+    const catObj = allCategories.find((c) => c.id === catId);
+    const catLabel = catObj ? catObj.label : (skillForm.categoryLabel || catId);
+
     if (editingSkillId) {
       setSkills((prev) =>
         prev.map((s) =>
           s.id === editingSkillId
-            ? ({ ...s, ...skillForm } as Skill)
+            ? ({
+                ...s,
+                ...skillForm,
+                category: catId,
+                categoryLabel: catLabel,
+              } as Skill)
             : s
         )
       );
@@ -212,15 +306,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       const newSkill: Skill = {
         id: 'skill_' + Date.now(),
         name: skillForm.name || 'Keahlian Baru',
-        category: skillForm.category || 'frontend',
-        categoryLabel:
-          skillForm.category === 'frontend'
-            ? 'Frontend'
-            : skillForm.category === 'backend'
-            ? 'Backend'
-            : skillForm.category === 'design'
-            ? 'Design & UI/UX'
-            : 'Tools & DevOps',
+        category: catId,
+        categoryLabel: catLabel,
         proficiency: Number(skillForm.proficiency) || 80,
         level: skillForm.level || 'Mahir',
         iconName: skillForm.iconName || 'Code',
@@ -1089,11 +1176,105 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <div>
                     <div className="mb-6">
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                        Kelola Keahlian & Teknologi
+                        Kelola Keahlian & Kategori Teknologi
                       </h3>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Tambah, edit, atau hapus keahlian teknis yang ditampilkan di beranda.
+                        Tambah, edit, atau hapus keahlian teknis dan buat kategori baru secara fleksibel.
                       </p>
+                    </div>
+
+                    {/* Available Categories Badge List & Quick Creator */}
+                    <div className="mb-6 p-4 bg-gray-50/80 dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-200">
+                            Kategori Keahlian Tersedia ({allCategories.length})
+                          </h4>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setIsAddingNewCategory(!isAddingNewCategory)}
+                          className="text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-blue-200 dark:border-blue-800 transition-colors shadow-2xs"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Buat Kategori Baru</span>
+                        </button>
+                      </div>
+
+                      {/* List of Category Badges */}
+                      <div className="flex flex-wrap gap-2">
+                        {allCategories.map((c) => {
+                          const count = skills.filter((s) => s.category === c.id).length;
+                          const isCustom = customCategories.some((cc) => cc.id === c.id);
+                          return (
+                            <div
+                              key={c.id}
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-xs font-medium shadow-2xs"
+                            >
+                              <span>{c.label}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold">
+                                {count} keahlian
+                              </span>
+                              {isCustom && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteCustomCategory(c.id, c.label)}
+                                  className="text-gray-400 hover:text-red-500 transition-colors ml-1 p-0.5"
+                                  title="Hapus kategori kustom ini"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Inline New Category Creator Box */}
+                      <AnimatePresence>
+                        {isAddingNewCategory && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden"
+                          >
+                            <div className="p-3.5 bg-blue-50/80 dark:bg-blue-950/60 rounded-xl border border-blue-200 dark:border-blue-800/80 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
+                                  <FolderPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                  <span>Tambah Kategori Keahlian Baru</span>
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setIsAddingNewCategory(false)}
+                                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                              <form onSubmit={handleAddCategory} className="flex gap-2">
+                                <input
+                                  type="text"
+                                  value={newCategoryInput}
+                                  onChange={(e) => setNewCategoryInput(e.target.value)}
+                                  placeholder="Nama kategori baru (contoh: Mobile App, AI & Machine Learning, Data Science)"
+                                  className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-blue-500"
+                                  autoFocus
+                                />
+                                <button
+                                  type="submit"
+                                  className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 shadow-sm flex items-center gap-1"
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                  <span>Simpan Kategori</span>
+                                </button>
+                              </form>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     {/* Skill Form Box */}
@@ -1110,7 +1291,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             </label>
                             <input
                               type="text"
-                              placeholder="cth: React.js, GraphQL"
+                              placeholder="cth: React.js, GraphQL, Flutter"
                               value={skillForm.name || ''}
                               onChange={(e) =>
                                 setSkillForm({ ...skillForm, name: e.target.value })
@@ -1121,32 +1302,41 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           </div>
 
                           <div>
-                            <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                              Kategori
-                            </label>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300">
+                                Kategori
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => setIsAddingNewCategory(true)}
+                                className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                              >
+                                + Kategori Baru
+                              </button>
+                            </div>
                             <select
                               value={skillForm.category || 'frontend'}
                               onChange={(e) => {
-                                const cat = e.target.value as any;
+                                const cat = e.target.value;
+                                if (cat === '__CREATE_NEW__') {
+                                  setIsAddingNewCategory(true);
+                                  return;
+                                }
+                                const catObj = allCategories.find((c) => c.id === cat);
                                 setSkillForm({
                                   ...skillForm,
                                   category: cat,
-                                  categoryLabel:
-                                    cat === 'frontend'
-                                      ? 'Frontend'
-                                      : cat === 'backend'
-                                      ? 'Backend'
-                                      : cat === 'design'
-                                      ? 'Design & UI/UX'
-                                      : 'Tools & DevOps',
+                                  categoryLabel: catObj ? catObj.label : cat,
                                 });
                               }}
                               className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                             >
-                              <option value="frontend">Frontend</option>
-                              <option value="backend">Backend</option>
-                              <option value="design">Design & UI/UX</option>
-                              <option value="tools">Tools & DevOps</option>
+                              {allCategories.map((c) => (
+                                <option key={c.id} value={c.id}>
+                                  {c.label}
+                                </option>
+                              ))}
+                              <option value="__CREATE_NEW__">+ Buat Kategori Baru...</option>
                             </select>
                           </div>
 

@@ -20,7 +20,7 @@ export interface Profile {
 export interface Skill {
   id: string;
   name: string;
-  category: 'frontend' | 'backend' | 'design' | 'tools';
+  category: string;
   categoryLabel: string;
   proficiency: number; // 0 to 100
   level: 'Pemula' | 'Menengah' | 'Mahir' | 'Ahli';
