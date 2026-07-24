@@ -10,6 +10,7 @@ import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { LivePreviewModal } from './components/LivePreviewModal';
 import { AdminPanel } from './components/AdminPanel';
+import { AnimatedBackground } from './components/AnimatedBackground';
 import { ShieldCheck, Edit3, CloudCheck } from 'lucide-react';
 
 import {
@@ -330,16 +331,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 font-sans selection:bg-blue-500 selection:text-white">
-      {/* Top Fixed Sticky Navbar */}
-      <Navbar
-        profile={profile}
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-        onOpenResume={() => setResumeOpen(true)}
-        onOpenAdmin={() => setAdminPanelOpen(true)}
-        isAuthenticated={isAuthenticated}
-      />
+    <div className="relative min-h-screen bg-[#FAF7F2] dark:bg-[#12100E] text-stone-900 dark:text-stone-100 transition-colors duration-300 font-sans selection:bg-amber-800 selection:text-white overflow-x-hidden">
+      {/* Dynamic Animated React Background */}
+      <AnimatedBackground darkMode={darkMode} />
+
+      {/* Main Relative Container Layer */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Top Fixed Sticky Navbar */}
+        <Navbar
+          profile={profile}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          onOpenResume={() => setResumeOpen(true)}
+          onOpenAdmin={() => setAdminPanelOpen(true)}
+          isAuthenticated={isAuthenticated}
+        />
 
       {/* Main Sections Flow */}
       <main>
@@ -381,6 +387,7 @@ export default function App() {
         profile={profile}
         socialLinks={socialLinks}
       />
+      </div>
 
       {/* Floating Admin Mode Pill / Quick Action */}
       <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2">

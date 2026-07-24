@@ -42,22 +42,22 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
         {/* Top Device Bar */}
         <div className="p-4 bg-gray-950 border-b border-gray-800 flex items-center justify-between text-white shrink-0">
           <div className="flex items-center gap-3">
-            <span className="font-bold text-sm text-blue-400">
+            <span className="font-bold text-sm text-amber-400">
               Live Interactive Demo:
             </span>
-            <span className="font-semibold text-sm text-gray-200 hidden sm:inline">
+            <span className="font-semibold text-sm text-stone-200 hidden sm:inline">
               {project.title}
             </span>
           </div>
 
           {/* Device Toggles */}
-          <div className="flex items-center gap-2 bg-gray-900 p-1 rounded-xl border border-gray-800">
+          <div className="flex items-center gap-2 bg-stone-900 p-1 rounded-xl border border-stone-800">
             <button
               onClick={() => setDeviceMode('desktop')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                 deviceMode === 'desktop'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-amber-800 text-amber-50'
+                  : 'text-stone-400 hover:text-white'
               }`}
             >
               <Monitor className="w-3.5 h-3.5" />
@@ -67,8 +67,8 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
               onClick={() => setDeviceMode('mobile')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                 deviceMode === 'mobile'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-amber-800 text-amber-50'
+                  : 'text-stone-400 hover:text-white'
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />

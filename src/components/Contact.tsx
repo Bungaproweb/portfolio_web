@@ -107,19 +107,19 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
   return (
     <section
       id="contact"
-      className="py-20 md:py-28 bg-white dark:bg-gray-900 transition-colors border-t border-gray-200/50 dark:border-gray-800/50"
+      className="py-20 md:py-28 bg-[#FAF7F2] dark:bg-[#12100E] transition-colors border-t border-amber-900/10 dark:border-amber-500/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Kontak & Diskusi</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight">
             Mari Bekerja Sama atau Mengobrol
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-base sm:text-lg text-stone-600 dark:text-stone-400">
             Punya proyek menarik, penawaran kerja, atau sekadar ingin berdiskusi? Jangan ragu untuk menghubungi saya!
           </p>
         </div>
@@ -127,11 +127,11 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Side Info & Social Links */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="p-8 rounded-3xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80 space-y-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="p-8 rounded-3xl bg-white dark:bg-stone-900/80 border border-stone-200 dark:border-stone-800 space-y-6 shadow-xs">
+              <h3 className="text-2xl font-bold text-stone-900 dark:text-stone-100">
                 Informasi Kontak
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed">
                 Saya selalu terbuka untuk mendiskusikan proyek baru, ide kreatif, atau peluang kerjasama bisnis.
               </p>
 
@@ -139,16 +139,16 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
               <div className="space-y-5 pt-2">
                 <a
                   href={`mailto:${profile.email}`}
-                  className="flex items-center gap-4 group p-3 rounded-2xl hover:bg-white dark:hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-4 group p-3 rounded-2xl hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 >
-                  <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                  <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-400 group-hover:scale-110 transition-transform">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    <div className="text-xs text-stone-500 dark:text-stone-400 font-medium">
                       Email Resmi
                     </div>
-                    <div className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <div className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
                       {profile.email}
                     </div>
                   </div>
@@ -159,30 +159,30 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                   target="_blank"
                   rel="noreferrer"
                   referrerPolicy="no-referrer"
-                  className="flex items-center gap-4 group p-3 rounded-2xl hover:bg-white dark:hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-4 group p-3 rounded-2xl hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 >
-                  <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                  <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 group-hover:scale-110 transition-transform">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    <div className="text-xs text-stone-500 dark:text-stone-400 font-medium">
                       WhatsApp / Telepon
                     </div>
-                    <div className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    <div className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                       {profile.phone}
                     </div>
                   </div>
                 </a>
 
                 <div className="flex items-center gap-4 p-3">
-                  <div className="p-3 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400">
+                  <div className="p-3 rounded-xl bg-stone-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    <div className="text-xs text-stone-500 dark:text-stone-400 font-medium">
                       Lokasi Domisili
                     </div>
-                    <div className="text-sm font-bold text-gray-900 dark:text-white">
+                    <div className="text-sm font-bold text-stone-900 dark:text-stone-100">
                       {profile.location}
                     </div>
                   </div>
@@ -190,13 +190,13 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
               </div>
 
               {/* Direct WhatsApp CTA Button */}
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-4 border-t border-stone-200 dark:border-stone-800">
                 <a
                   href={`https://wa.me/${profile.whatsappNumber}?text=Halo%20Alex,%20saya%20tertarik%20untuk%20berdiskusi%20mengenai%20proyek%20web.`}
                   target="_blank"
                   rel="noreferrer"
                   referrerPolicy="no-referrer"
-                  className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95"
+                  className="w-full py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm shadow-lg shadow-emerald-700/20 flex items-center justify-center gap-2 transition-all active:scale-95"
                   id="whatsapp-direct-btn"
                 >
                   <MessageSquare className="w-4 h-4" />
@@ -206,8 +206,8 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
             </div>
 
             {/* Social Links Badge Row */}
-            <div className="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80">
-              <h4 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+            <div className="p-6 rounded-3xl bg-white dark:bg-stone-900/80 border border-stone-200 dark:border-stone-800 shadow-xs">
+              <h4 className="text-sm font-bold text-stone-900 dark:text-stone-100 uppercase tracking-wider mb-4">
                 Media Sosial & Profil Profesional
               </h4>
               <div className="grid grid-cols-2 gap-3">
@@ -218,7 +218,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                     target="_blank"
                     rel="noreferrer"
                     referrerPolicy="no-referrer"
-                    className="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300 dark:hover:border-blue-600 text-xs font-semibold transition-all shadow-sm"
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400 hover:border-amber-600/60 dark:hover:border-amber-500/60 text-xs font-semibold transition-all shadow-xs"
                   >
                     {getSocialIcon(s.platform)}
                     <span>{s.platform}</span>
@@ -230,11 +230,11 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
 
           {/* Right Side Form */}
           <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xl relative">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-stone-900/80 border border-stone-200 dark:border-stone-800 shadow-xl relative">
+              <h3 className="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2">
                 Kirim Pesan Langsung
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">
+              <p className="text-sm text-stone-600 dark:text-stone-400 mb-8">
                 Isi formulir di bawah ini dan saya akan merespon pesan Anda dalam waktu kurang dari 24 jam.
               </p>
 
@@ -259,7 +259,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name Input */}
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
                       Nama Lengkap <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -267,10 +267,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Misal: Budi Pratama"
-                      className={`w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                      className={`w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-950 border text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-amber-800 transition-all ${
                         errors.name
                           ? 'border-red-500 focus:ring-red-500'
-                          : 'border-gray-200 dark:border-gray-700'
+                          : 'border-stone-200 dark:border-stone-800'
                       }`}
                       id="contact-name-input"
                     />
@@ -284,7 +284,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
 
                   {/* Email Input */}
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
                       Alamat Email <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -292,10 +292,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="budi@example.com"
-                      className={`w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                      className={`w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-950 border text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-amber-800 transition-all ${
                         errors.email
                           ? 'border-red-500 focus:ring-red-500'
-                          : 'border-gray-200 dark:border-gray-700'
+                          : 'border-stone-200 dark:border-stone-800'
                       }`}
                       id="contact-email-input"
                     />
@@ -310,7 +310,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
 
                 {/* Subject Input */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
                     Subjek / Topik <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -318,10 +318,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="Misal: Penawaran Proyek Redesain Web E-Commerce"
-                    className={`w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                    className={`w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-950 border text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-amber-800 transition-all ${
                       errors.subject
                         ? 'border-red-500 focus:ring-red-500'
-                        : 'border-gray-200 dark:border-gray-700'
+                        : 'border-stone-200 dark:border-stone-800'
                     }`}
                     id="contact-subject-input"
                   />
@@ -335,7 +335,7 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
 
                 {/* Message Textarea */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
                     Isi Pesan <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -343,10 +343,10 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Ceritakan gambaran singkat mengenai proyek, timeline, atau pertanyaan Anda..."
-                    className={`w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none ${
+                    className={`w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-950 border text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-amber-800 transition-all resize-none ${
                       errors.message
                         ? 'border-red-500 focus:ring-red-500'
-                        : 'border-gray-200 dark:border-gray-700'
+                        : 'border-stone-200 dark:border-stone-800'
                     }`}
                     id="contact-message-input"
                   />
@@ -362,12 +362,12 @@ export const Contact: React.FC<ContactProps> = ({ profile, socialLinks }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-base shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 hover:from-amber-900 hover:to-stone-950 text-amber-50 font-bold text-base shadow-lg shadow-amber-900/20 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
                   id="submit-message-btn"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 animate-spin" />
+                      <Clock className="w-5 h-5 animate-spin text-amber-300" />
                       <span>Mengirim Pesan...</span>
                     </div>
                   ) : (

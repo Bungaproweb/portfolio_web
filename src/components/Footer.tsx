@@ -58,9 +58,9 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
   };
 
   return (
-    <footer className="bg-gray-950 text-white pt-16 pb-12 border-t border-gray-800">
+    <footer className="bg-[#12100E] text-stone-300 pt-16 pb-12 border-t border-amber-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-gray-800">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-stone-800">
           {/* Column 1: Logo & Tagline */}
           <div className="md:col-span-5 space-y-4">
             <a
@@ -71,15 +71,15 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
               }}
               className="flex items-center gap-2.5 inline-flex"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-800 via-amber-900 to-stone-900 flex items-center justify-center text-amber-200 shadow-md border border-amber-700/50">
                 <Code2 className="w-5 h-5" />
               </div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
+              <span className="font-extrabold text-xl tracking-tight text-amber-100">
                 {profile.name}
               </span>
             </a>
 
-            <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
+            <p className="text-sm text-stone-400 max-w-sm leading-relaxed">
               {profile.shortBio}
             </p>
 
@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
                   target="_blank"
                   rel="noreferrer"
                   referrerPolicy="no-referrer"
-                  className="p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:border-blue-500 hover:bg-blue-950/40 transition-colors"
+                  className="p-2.5 rounded-xl bg-stone-900 border border-stone-800 text-stone-400 hover:text-amber-300 hover:border-amber-700 hover:bg-amber-950/40 transition-colors"
                   title={s.platform}
                 >
                   {getSocialIcon(s.platform)}
@@ -102,14 +102,14 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
 
           {/* Column 2: Quick Links */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-blue-400">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-amber-400">
               Navigasi Cepat
             </h4>
-            <ul className="space-y-2.5 text-sm text-gray-400">
+            <ul className="space-y-2.5 text-sm text-stone-400">
               <li>
                 <button
                   onClick={() => scrollToSection('home')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-amber-200 transition-colors"
                 >
                   Beranda
                 </button>
@@ -117,7 +117,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('about')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-amber-200 transition-colors"
                 >
                   Tentang Saya
                 </button>
@@ -125,7 +125,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('skills')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-amber-200 transition-colors"
                 >
                   Keahlian Teknis
                 </button>
@@ -133,7 +133,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('projects')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-amber-200 transition-colors"
                 >
                   Portofolio Proyek
                 </button>
@@ -141,7 +141,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-amber-200 transition-colors"
                 >
                   Hubungi Saya
                 </button>
@@ -151,10 +151,10 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
 
           {/* Column 3: Contact Summary */}
           <div className="md:col-span-4 space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-blue-400">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-amber-400">
               Kontak Singkat
             </h4>
-            <div className="space-y-2 text-sm text-gray-400">
+            <div className="space-y-2 text-sm text-stone-400">
               <div>Email: {profile.email}</div>
               <div>Telepon / WA: {profile.phone}</div>
               <div>Lokasi: {profile.location}</div>
@@ -166,18 +166,18 @@ export const Footer: React.FC<FooterProps> = ({ profile, socialLinks }) => {
         </div>
 
         {/* Bottom copyright row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <div>
             © {new Date().getFullYear()} {profile.name}. Dibuat dengan React, Tailwind CSS, & Motion.
           </div>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 hover:text-white hover:border-blue-500 transition-all shadow-md active:scale-95"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 border border-stone-800 text-stone-300 hover:text-amber-300 hover:border-amber-700 transition-all shadow-md active:scale-95"
             id="back-to-top-btn"
           >
             <span>Kembali ke Atas</span>
-            <ArrowUp className="w-3.5 h-3.5 text-blue-400" />
+            <ArrowUp className="w-3.5 h-3.5 text-amber-400" />
           </button>
         </div>
       </div>

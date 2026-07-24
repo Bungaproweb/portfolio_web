@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       id="main-header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/85 dark:bg-gray-900/85 backdrop-blur-md shadow-md py-3 border-b border-gray-200/50 dark:border-gray-800/50'
+          ? 'bg-[#FAF7F2]/90 dark:bg-[#12100E]/90 backdrop-blur-md shadow-md py-3 border-b border-amber-900/10 dark:border-amber-500/10'
           : 'bg-transparent py-5'
       }`}
     >
@@ -96,21 +96,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-2.5 group"
             id="nav-logo"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
-              <Code2 className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#8C5A3C] via-[#6F442B] to-[#3A2312] flex items-center justify-center text-amber-100 shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform duration-200">
+              <Code2 className="w-5 h-5 text-amber-200" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <span className="font-bold text-lg tracking-tight text-stone-900 dark:text-stone-100 group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
                 {profile.name}
               </span>
-              <span className="text-[10px] tracking-wider uppercase text-blue-600 dark:text-blue-400 font-semibold">
+              <span className="text-[10px] tracking-wider uppercase text-amber-800 dark:text-amber-400 font-bold">
                 Portfolio
               </span>
             </div>
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 bg-gray-100/80 dark:bg-gray-800/80 p-1.5 rounded-full border border-gray-200/80 dark:border-gray-700/80 backdrop-blur-sm">
+          <nav className="hidden md:flex items-center gap-1 bg-stone-200/60 dark:bg-stone-900/80 p-1.5 rounded-full border border-stone-300/60 dark:border-stone-800/80 backdrop-blur-sm">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -119,15 +119,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => scrollToSection(item.id)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 relative ${
                     isActive
-                      ? 'text-white font-semibold'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'text-amber-950 dark:text-amber-100 font-bold'
+                      : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
                   }`}
                   id={`nav-item-${item.id}`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeNavBackground"
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-sm"
+                      className="absolute inset-0 bg-gradient-to-r from-amber-200 to-amber-300 dark:from-amber-900/70 dark:to-stone-800 rounded-full shadow-xs border border-amber-300/80 dark:border-amber-700/50"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -142,10 +142,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Admin Panel Button */}
             <button
               onClick={onOpenAdmin}
-              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm border ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-xs border ${
                 isAuthenticated
-                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
-                  : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/60'
+                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                  : 'bg-amber-100/80 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-900 hover:bg-amber-200/80 dark:hover:bg-amber-900/60'
               }`}
               title="Panel Admin untuk mengedit konten beranda"
               id="open-admin-panel-btn"
@@ -157,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Theme Switcher Button */}
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700 shadow-sm"
+              className="p-2.5 rounded-full bg-stone-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors border border-stone-300 dark:border-stone-700 shadow-xs"
               aria-label="Toggle Theme"
               title={darkMode ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap'}
               id="theme-toggle-btn"
@@ -165,14 +165,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {darkMode ? (
                 <Sun className="w-4 h-4 text-amber-400" />
               ) : (
-                <Moon className="w-4 h-4 text-slate-700" />
+                <Moon className="w-4 h-4 text-stone-700" />
               )}
             </button>
 
             {/* Resume Button */}
             <button
               onClick={onOpenResume}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-sm active:scale-95"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 dark:bg-amber-700 dark:hover:bg-amber-600 text-amber-50 font-semibold text-sm transition-all shadow-md active:scale-95 border border-amber-800/50"
               id="open-resume-btn"
             >
               <FileText className="w-4 h-4" />
@@ -184,16 +184,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 md:hidden">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+              className="p-2 rounded-xl bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200"
               aria-label="Toggle Theme"
               id="mobile-theme-toggle"
             >
-              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100"
+              className="p-2 rounded-xl bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-100"
               aria-label="Toggle Menu"
               id="mobile-menu-btn"
             >
@@ -210,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden"
+            className="md:hidden bg-[#FAF7F2] dark:bg-[#12100E] border-b border-amber-900/10 dark:border-amber-500/10 shadow-xl overflow-hidden"
             id="mobile-nav-drawer"
           >
             <div className="px-4 pt-3 pb-6 space-y-2">
@@ -220,18 +220,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => scrollToSection(item.id)}
                   className={`w-full text-left px-4 py-3 rounded-xl font-medium text-base transition-colors flex items-center justify-between ${
                     activeSection === item.id
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold'
-                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 font-bold'
+                      : 'text-stone-700 dark:text-stone-200 hover:bg-stone-200/50 dark:hover:bg-stone-800'
                   }`}
                 >
                   <span>{item.label}</span>
                   {activeSection === item.id && (
-                    <div className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+                    <div className="w-2 h-2 rounded-full bg-amber-700 dark:bg-amber-400" />
                   )}
                 </button>
               ))}
 
-              <div className="pt-2 border-t border-gray-200 dark:border-gray-800 space-y-2">
+              <div className="pt-2 border-t border-stone-200 dark:border-stone-800 space-y-2">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -240,7 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all border ${
                     isAuthenticated
                       ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                      : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                      : 'bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-900'
                   }`}
                 >
                   <ShieldCheck className="w-4 h-4" />
@@ -252,7 +252,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenResume();
                   }}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-sm shadow-md"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-900 text-amber-50 font-semibold text-sm shadow-md"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Lihat & Unduh CV</span>

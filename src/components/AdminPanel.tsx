@@ -840,17 +840,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             /* AUTHENTICATED EDITOR VIEW WITH TABS */
             <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
               {/* Left Sidebar Navigation Tabs */}
-              <div className="w-full md:w-64 bg-gray-50/80 dark:bg-gray-800/40 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 p-3 flex md:flex-col gap-1 overflow-x-auto shrink-0">
+              <div className="w-full md:w-64 bg-stone-100/70 dark:bg-stone-900/40 border-b md:border-b-0 md:border-r border-stone-200 dark:border-stone-800 p-3 flex md:flex-col gap-1 overflow-x-auto shrink-0">
                 <button
                   onClick={() => setActiveTab('profile')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
                     activeTab === 'profile'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-profile"
                 >
-                  <User className="w-4 h-4 shrink-0" />
+                  <User className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Profil & Hero</span>
                 </button>
 
@@ -858,12 +858,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   onClick={() => setActiveTab('skills')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
                     activeTab === 'skills'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-skills"
                 >
-                  <Code2 className="w-4 h-4 shrink-0" />
+                  <Code2 className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Keahlian ({skills.length})</span>
                 </button>
 
@@ -871,12 +871,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   onClick={() => setActiveTab('projects')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
                     activeTab === 'projects'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-projects"
                 >
-                  <Briefcase className="w-4 h-4 shrink-0" />
+                  <Briefcase className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Proyek ({projects.length})</span>
                 </button>
 
@@ -884,12 +884,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   onClick={() => setActiveTab('experiences')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
                     activeTab === 'experiences'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-experiences"
                 >
-                  <GraduationCap className="w-4 h-4 shrink-0" />
+                  <GraduationCap className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Pengalaman ({experiences.length})</span>
                 </button>
 
@@ -897,12 +897,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   onClick={() => setActiveTab('testimonials')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 ${
                     activeTab === 'testimonials'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-testimonials"
                 >
-                  <MessageSquare className="w-4 h-4 shrink-0" />
+                  <MessageSquare className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Testimoni ({testimonials.length})</span>
                 </button>
 
@@ -910,12 +910,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   onClick={() => setActiveTab('security')}
                   className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left shrink-0 md:mt-auto ${
                     activeTab === 'security'
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-800'
+                      ? 'bg-amber-900 text-amber-50 font-semibold shadow-sm'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
                   }`}
                   id="tab-security"
                 >
-                  <Key className="w-4 h-4 shrink-0" />
+                  <Key className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Autentikasi & Reset</span>
                 </button>
               </div>
@@ -1269,18 +1269,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </div>
 
                     {/* Available Categories Badge List & Quick Creator */}
-                    <div className="mb-6 p-4 bg-gray-50/80 dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700">
+                    <div className="mb-6 p-4 bg-stone-100/70 dark:bg-stone-900/60 rounded-2xl border border-stone-200 dark:border-stone-800">
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                         <div className="flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-200">
+                          <Layers className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-stone-800 dark:text-stone-200">
                             Kategori Keahlian Tersedia ({allCategories.length})
                           </h4>
                         </div>
                         <button
                           type="button"
                           onClick={() => setIsAddingNewCategory(!isAddingNewCategory)}
-                          className="text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-blue-200 dark:border-blue-800 transition-colors shadow-2xs"
+                          className="text-xs text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-950/60 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-amber-300 dark:border-amber-800 transition-colors shadow-2xs"
                         >
                           <Plus className="w-3.5 h-3.5" />
                           <span>Buat Kategori Baru</span>
@@ -1295,17 +1295,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           return (
                             <div
                               key={c.id}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-xs font-medium shadow-2xs"
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 border border-stone-200 dark:border-stone-800 text-xs font-medium shadow-2xs"
                             >
                               <span>{c.label}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-800">
                                 {count} keahlian
                               </span>
                               {isCustom && (
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteCustomCategory(c.id, c.label)}
-                                  className="text-gray-400 hover:text-red-500 transition-colors ml-1 p-0.5"
+                                  className="text-stone-400 hover:text-red-500 transition-colors ml-1 p-0.5"
                                   title="Hapus kategori kustom ini"
                                 >
                                   <Trash2 className="w-3 h-3" />
@@ -1323,18 +1323,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden"
+                            className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-800 overflow-hidden"
                           >
-                            <div className="p-3.5 bg-blue-50/80 dark:bg-blue-950/60 rounded-xl border border-blue-200 dark:border-blue-800/80 space-y-2">
+                            <div className="p-3.5 bg-amber-50/80 dark:bg-amber-950/60 rounded-xl border border-amber-200 dark:border-amber-800/80 space-y-2">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
-                                  <FolderPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                <span className="text-xs font-bold text-amber-950 dark:text-amber-200 flex items-center gap-1.5">
+                                  <FolderPlus className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                                   <span>Tambah Kategori Keahlian Baru</span>
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => setIsAddingNewCategory(false)}
-                                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs"
+                                  className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 text-xs"
                                 >
                                   ✕
                                 </button>
@@ -1345,12 +1345,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                                   value={newCategoryInput}
                                   onChange={(e) => setNewCategoryInput(e.target.value)}
                                   placeholder="Nama kategori baru (contoh: Mobile App, AI & Machine Learning, Data Science)"
-                                  className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-800"
                                   autoFocus
                                 />
                                 <button
                                   type="submit"
-                                  className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 shadow-sm flex items-center gap-1"
+                                  className="px-4 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 font-semibold text-xs shrink-0 shadow-xs flex items-center gap-1"
                                 >
                                   <Plus className="w-3.5 h-3.5" />
                                   <span>Simpan Kategori</span>
@@ -1587,18 +1587,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </div>
 
                     {/* Available Project Categories Badge List & Quick Creator */}
-                    <div className="mb-6 p-4 bg-gray-50/80 dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700">
+                    <div className="mb-6 p-4 bg-stone-100/70 dark:bg-stone-900/60 rounded-2xl border border-stone-200 dark:border-stone-800">
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                         <div className="flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-200">
+                          <Layers className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-stone-800 dark:text-stone-200">
                             Kategori Proyek Tersedia ({allProjectCategories.length})
                           </h4>
                         </div>
                         <button
                           type="button"
                           onClick={() => setIsAddingNewProjectCategory(!isAddingNewProjectCategory)}
-                          className="text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-blue-200 dark:border-blue-800 transition-colors shadow-2xs"
+                          className="text-xs text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-950/60 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-amber-300 dark:border-amber-800 transition-colors shadow-2xs"
                         >
                           <Plus className="w-3.5 h-3.5" />
                           <span>Buat Kategori Proyek Baru</span>
@@ -1613,17 +1613,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           return (
                             <div
                               key={c.id}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-xs font-medium shadow-2xs"
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 border border-stone-200 dark:border-stone-800 text-xs font-medium shadow-2xs"
                             >
                               <span>{c.label}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-800">
                                 {count} proyek
                               </span>
                               {isCustom && (
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteCustomProjectCategory(c.id, c.label)}
-                                  className="text-gray-400 hover:text-red-500 transition-colors ml-1 p-0.5"
+                                  className="text-stone-400 hover:text-red-500 transition-colors ml-1 p-0.5"
                                   title="Hapus kategori proyek kustom ini"
                                 >
                                   <Trash2 className="w-3 h-3" />
@@ -1641,18 +1641,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden"
+                            className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-800 overflow-hidden"
                           >
-                            <div className="p-3.5 bg-blue-50/80 dark:bg-blue-950/60 rounded-xl border border-blue-200 dark:border-blue-800/80 space-y-2">
+                            <div className="p-3.5 bg-amber-50/80 dark:bg-amber-950/60 rounded-xl border border-amber-200 dark:border-amber-800/80 space-y-2">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
-                                  <FolderPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                <span className="text-xs font-bold text-amber-950 dark:text-amber-200 flex items-center gap-1.5">
+                                  <FolderPlus className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                                   <span>Tambah Kategori Proyek Baru</span>
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => setIsAddingNewProjectCategory(false)}
-                                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs"
+                                  className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 text-xs"
                                 >
                                   ✕
                                 </button>
@@ -1663,12 +1663,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                                   value={newProjectCategoryInput}
                                   onChange={(e) => setNewProjectCategoryInput(e.target.value)}
                                   placeholder="Nama kategori baru (contoh: Blockchain, AI App, E-Commerce, IoT)"
-                                  className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-800"
                                   autoFocus
                                 />
                                 <button
                                   type="submit"
-                                  className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 shadow-sm flex items-center gap-1"
+                                  className="px-4 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 font-semibold text-xs shrink-0 shadow-xs flex items-center gap-1"
                                 >
                                   <Plus className="w-3.5 h-3.5" />
                                   <span>Simpan Kategori</span>
