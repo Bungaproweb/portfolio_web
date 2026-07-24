@@ -25,11 +25,11 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, onOpenLivePreview 
   const [selectedProjectModal, setSelectedProjectModal] = useState<Project | null>(null);
 
   const baseCategories = [
-    { id: 'all', label: 'Semua Proyek' },
-    { id: 'web', label: 'Web App' },
-    { id: 'saas', label: 'SaaS & Dashboard' },
-    { id: 'mobile', label: 'Mobile Responsive' },
-    { id: 'design', label: 'UI/UX Design' },
+    { id: 'all', label: 'Semua Karya' },
+    { id: 'commercial', label: 'Iklan & Commercial' },
+    { id: 'motion', label: 'Motion & VFX' },
+    { id: 'social', label: 'Content & Social Media' },
+    { id: 'cinematic', label: 'Film & Dokumenter' },
   ];
 
   const customCategoryMap = new Map<string, string>();
@@ -77,7 +77,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, onOpenLivePreview 
             Proyek Pilihan & Hasil Kerja
           </h2>
           <p className="mt-4 text-base sm:text-lg text-stone-600 dark:text-stone-400">
-            Jelajahi berbagai aplikasi web, sistem e-commerce, dashboard interaktif, dan desain antarmuka yang pernah saya kembangkan.
+            Jelajahi berbagai video komersial, motion graphics, konten media sosial, short film, dan karya editing sinematik yang telah saya produksi.
           </p>
         </div>
 
