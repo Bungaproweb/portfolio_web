@@ -11,6 +11,9 @@ import {
   CheckCircle2,
   Briefcase,
   Award,
+  Film,
+  Video,
+  Code,
 } from 'lucide-react';
 import { Profile } from '../types/portfolio';
 import { formatImageUrl } from '../utils/imageUtils';
@@ -83,19 +86,26 @@ export const Hero: React.FC<HeroProps> = ({ profile, onOpenResume }) => {
               {profile.bio}
             </p>
 
-            {/* Highlight Badges */}
+            {/* Highlight Badges - Half Video Editor & Half Basic HTML */}
             <div className="flex flex-wrap gap-2.5 mb-10">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-200/60 dark:bg-stone-900 text-stone-800 dark:text-stone-300 text-xs sm:text-sm font-medium border border-stone-300/60 dark:border-stone-800">
-                <CheckCircle2 className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                <span>React & TypeScript</span>
+              {/* Video Editor Badges */}
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 dark:bg-amber-950/50 text-stone-800 dark:text-stone-200 text-xs sm:text-sm font-semibold border border-amber-300/70 dark:border-amber-800/60">
+                <Film className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                <span>Video Editing & Color Grading</span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-200/60 dark:bg-stone-900 text-stone-800 dark:text-stone-300 text-xs sm:text-sm font-medium border border-stone-300/60 dark:border-stone-800">
-                <CheckCircle2 className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                <span>Tailwind CSS & Motion</span>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 dark:bg-amber-950/50 text-stone-800 dark:text-stone-200 text-xs sm:text-sm font-semibold border border-amber-300/70 dark:border-amber-800/60">
+                <Video className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                <span>Motion Graphics & Audio</span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-200/60 dark:bg-stone-900 text-stone-800 dark:text-stone-300 text-xs sm:text-sm font-medium border border-stone-300/60 dark:border-stone-800">
+
+              {/* HTML Basic Badges */}
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-200/70 dark:bg-stone-900 text-stone-800 dark:text-stone-300 text-xs sm:text-sm font-semibold border border-stone-300/70 dark:border-stone-800">
+                <Code className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                <span>HTML5 & CSS3 Basic</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-200/70 dark:bg-stone-900 text-stone-800 dark:text-stone-300 text-xs sm:text-sm font-semibold border border-stone-300/70 dark:border-stone-800">
                 <CheckCircle2 className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                <span>UI/UX Prototyping</span>
+                <span>Basic Web Development</span>
               </div>
             </div>
 
