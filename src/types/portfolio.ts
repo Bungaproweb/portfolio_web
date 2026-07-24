@@ -35,7 +35,7 @@ export interface Project {
   subtitle: string;
   description: string;
   fullDescription: string;
-  category: 'web' | 'mobile' | 'design' | 'saas';
+  category: string;
   categoryLabel: string;
   featured: boolean;
   imageUrl: string;

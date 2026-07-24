@@ -344,6 +344,92 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   // ----------------------------------------------------
+  // PROJECT CATEGORIES EDIT FORM STATE
+  // ----------------------------------------------------
+  const defaultProjectCategoriesList = [
+    { id: 'web', label: 'Web App' },
+    { id: 'saas', label: 'SaaS & Dashboard' },
+    { id: 'mobile', label: 'Mobile Responsive' },
+    { id: 'design', label: 'UI/UX Design' },
+  ];
+
+  const [customProjectCategories, setCustomProjectCategories] = useState<{ id: string; label: string }[]>(() => {
+    const saved = localStorage.getItem('portfolio_custom_project_categories');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed parsing custom project categories', e);
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('portfolio_custom_project_categories', JSON.stringify(customProjectCategories));
+  }, [customProjectCategories]);
+
+  const allProjectCategories = React.useMemo(() => {
+    const map = new Map<string, string>();
+    defaultProjectCategoriesList.forEach((c) => map.set(c.id, c.label));
+    customProjectCategories.forEach((c) => map.set(c.id, c.label));
+    projects.forEach((p) => {
+      if (p.category && !map.has(p.category)) {
+        map.set(p.category, p.categoryLabel || p.category);
+      }
+    });
+    return Array.from(map.entries()).map(([id, label]) => ({ id, label }));
+  }, [customProjectCategories, projects]);
+
+  const [isAddingNewProjectCategory, setIsAddingNewProjectCategory] = useState(false);
+  const [newProjectCategoryInput, setNewProjectCategoryInput] = useState('');
+
+  const handleAddProjectCategory = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!newProjectCategoryInput.trim()) return;
+
+    const label = newProjectCategoryInput.trim();
+    const catId = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ('pcat_' + Date.now());
+
+    const exists = allProjectCategories.some(
+      (c) => c.id === catId || c.label.toLowerCase() === label.toLowerCase()
+    );
+
+    if (exists) {
+      const existingCat = allProjectCategories.find(
+        (c) => c.id === catId || c.label.toLowerCase() === label.toLowerCase()
+      );
+      showToast(`Kategori proyek "${label}" sudah ada.`);
+      setProjectForm((prev) => ({
+        ...prev,
+        category: existingCat?.id || catId,
+        categoryLabel: existingCat?.label || label,
+      }));
+      setNewProjectCategoryInput('');
+      setIsAddingNewProjectCategory(false);
+      return;
+    }
+
+    const newCat = { id: catId, label };
+    setCustomProjectCategories((prev) => [...prev, newCat]);
+    setProjectForm((prev) => ({
+      ...prev,
+      category: catId,
+      categoryLabel: label,
+    }));
+    setNewProjectCategoryInput('');
+    setIsAddingNewProjectCategory(false);
+    showToast(`Kategori proyek baru "${label}" berhasil ditambahkan!`);
+  };
+
+  const handleDeleteCustomProjectCategory = (catId: string, catLabel: string) => {
+    if (confirm(`Hapus kategori proyek "${catLabel}"? Proyek dengan kategori ini tetap tersimpan.`)) {
+      setCustomProjectCategories((prev) => prev.filter((c) => c.id !== catId));
+      showToast(`Kategori proyek "${catLabel}" telah dihapus.`);
+    }
+  };
+
+  // ----------------------------------------------------
   // PROJECTS EDIT FORM STATE
   // ----------------------------------------------------
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
@@ -375,6 +461,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     const tagsArr = Array.isArray(projectForm.tags) ? projectForm.tags : [];
     const highlightsArr = Array.isArray(projectForm.highlights) ? projectForm.highlights : [];
 
+    const catId = projectForm.category || 'web';
+    const catObj = allProjectCategories.find((c) => c.id === catId);
+    const catLabel = catObj ? catObj.label : (projectForm.categoryLabel || catId);
+
     if (editingProjectId) {
       setProjects((prev) =>
         prev.map((p) =>
@@ -382,6 +472,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             ? ({
                 ...p,
                 ...projectForm,
+                category: catId,
+                categoryLabel: catLabel,
                 tags: tagsArr,
                 highlights: highlightsArr,
                 gallery: projectForm.imageUrl ? [projectForm.imageUrl] : p.gallery,
@@ -397,15 +489,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         subtitle: projectForm.subtitle || '',
         description: projectForm.description || '',
         fullDescription: projectForm.fullDescription || projectForm.description || '',
-        category: projectForm.category || 'web',
-        categoryLabel:
-          projectForm.category === 'web'
-            ? 'Web App'
-            : projectForm.category === 'saas'
-            ? 'SaaS & Dashboard'
-            : projectForm.category === 'mobile'
-            ? 'Mobile Responsive'
-            : 'UI/UX Design',
+        category: catId,
+        categoryLabel: catLabel,
         featured: Boolean(projectForm.featured),
         imageUrl:
           projectForm.imageUrl ||
@@ -1494,11 +1579,105 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <div>
                     <div className="mb-6">
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                        Kelola Proyek Portfolio
+                        Kelola Proyek Portfolio & Kategori
                       </h3>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Tambah proyek baru, edit detail proyek, link live preview, atau foto galeri.
+                        Tambah proyek baru, edit detail proyek, link live preview, atau atur kategori proyek secara bebas.
                       </p>
+                    </div>
+
+                    {/* Available Project Categories Badge List & Quick Creator */}
+                    <div className="mb-6 p-4 bg-gray-50/80 dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-200">
+                            Kategori Proyek Tersedia ({allProjectCategories.length})
+                          </h4>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setIsAddingNewProjectCategory(!isAddingNewProjectCategory)}
+                          className="text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 border border-blue-200 dark:border-blue-800 transition-colors shadow-2xs"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Buat Kategori Proyek Baru</span>
+                        </button>
+                      </div>
+
+                      {/* List of Category Badges */}
+                      <div className="flex flex-wrap gap-2">
+                        {allProjectCategories.map((c) => {
+                          const count = projects.filter((p) => p.category === c.id).length;
+                          const isCustom = customProjectCategories.some((cc) => cc.id === c.id);
+                          return (
+                            <div
+                              key={c.id}
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-xs font-medium shadow-2xs"
+                            >
+                              <span>{c.label}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold">
+                                {count} proyek
+                              </span>
+                              {isCustom && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteCustomProjectCategory(c.id, c.label)}
+                                  className="text-gray-400 hover:text-red-500 transition-colors ml-1 p-0.5"
+                                  title="Hapus kategori proyek kustom ini"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Inline New Project Category Creator Box */}
+                      <AnimatePresence>
+                        {isAddingNewProjectCategory && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden"
+                          >
+                            <div className="p-3.5 bg-blue-50/80 dark:bg-blue-950/60 rounded-xl border border-blue-200 dark:border-blue-800/80 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
+                                  <FolderPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                  <span>Tambah Kategori Proyek Baru</span>
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setIsAddingNewProjectCategory(false)}
+                                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                              <form onSubmit={handleAddProjectCategory} className="flex gap-2">
+                                <input
+                                  type="text"
+                                  value={newProjectCategoryInput}
+                                  onChange={(e) => setNewProjectCategoryInput(e.target.value)}
+                                  placeholder="Nama kategori baru (contoh: Blockchain, AI App, E-Commerce, IoT)"
+                                  className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-blue-500"
+                                  autoFocus
+                                />
+                                <button
+                                  type="submit"
+                                  className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 shadow-sm flex items-center gap-1"
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                  <span>Simpan Kategori</span>
+                                </button>
+                              </form>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     {/* Project Form Box */}
@@ -1541,32 +1720,41 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           </div>
 
                           <div>
-                            <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                              Kategori Proyek
-                            </label>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300">
+                                Kategori Proyek
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => setIsAddingNewProjectCategory(true)}
+                                className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                              >
+                                + Kategori Baru
+                              </button>
+                            </div>
                             <select
                               value={projectForm.category || 'web'}
                               onChange={(e) => {
-                                const cat = e.target.value as any;
+                                const cat = e.target.value;
+                                if (cat === '__CREATE_NEW__') {
+                                  setIsAddingNewProjectCategory(true);
+                                  return;
+                                }
+                                const catObj = allProjectCategories.find((c) => c.id === cat);
                                 setProjectForm({
                                   ...projectForm,
                                   category: cat,
-                                  categoryLabel:
-                                    cat === 'web'
-                                      ? 'Web App'
-                                      : cat === 'saas'
-                                      ? 'SaaS & Dashboard'
-                                      : cat === 'mobile'
-                                      ? 'Mobile Responsive'
-                                      : 'UI/UX Design',
+                                  categoryLabel: catObj ? catObj.label : cat,
                                 });
                               }}
                               className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                             >
-                              <option value="web">Web App</option>
-                              <option value="saas">SaaS & Dashboard</option>
-                              <option value="mobile">Mobile Responsive</option>
-                              <option value="design">UI/UX Design</option>
+                              {allProjectCategories.map((c) => (
+                                <option key={c.id} value={c.id}>
+                                  {c.label}
+                                </option>
+                              ))}
+                              <option value="__CREATE_NEW__">+ Buat Kategori Baru...</option>
                             </select>
                           </div>
 

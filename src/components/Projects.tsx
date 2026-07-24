@@ -24,12 +24,27 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, onOpenLivePreview 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedProjectModal, setSelectedProjectModal] = useState<Project | null>(null);
 
-  const categories = [
+  const baseCategories = [
     { id: 'all', label: 'Semua Proyek' },
     { id: 'web', label: 'Web App' },
     { id: 'saas', label: 'SaaS & Dashboard' },
     { id: 'mobile', label: 'Mobile Responsive' },
     { id: 'design', label: 'UI/UX Design' },
+  ];
+
+  const customCategoryMap = new Map<string, string>();
+  projects.forEach((p) => {
+    if (p.category && !baseCategories.some((c) => c.id === p.category)) {
+      customCategoryMap.set(p.category, p.categoryLabel || p.category);
+    }
+  });
+
+  const categories = [
+    ...baseCategories,
+    ...Array.from(customCategoryMap.entries()).map(([id, label]) => ({
+      id,
+      label,
+    })),
   ];
 
   const filteredProjects = projects.filter((project) => {
