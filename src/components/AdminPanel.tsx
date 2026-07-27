@@ -538,6 +538,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const handleEditProjectClick = (p: Project) => {
     setEditingProjectId(p.id);
     setProjectForm(p);
+    setTagInput(p.tags ? p.tags.join(', ') : '');
   };
 
   const handleDeleteProject = (id: string) => {
@@ -551,6 +552,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   // EXPERIENCES & EDUCATION STATE
   // ----------------------------------------------------
   const [editingExpId, setEditingExpId] = useState<string | null>(null);
+  const [expSkillsInput, setExpSkillsInput] = useState<string>('');
   const [expForm, setExpForm] = useState<Partial<Experience>>({
     role: '',
     company: '',
@@ -565,10 +567,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     e.preventDefault();
     if (!expForm.role?.trim()) return;
 
+    const skillsArr = expSkillsInput
+      ? expSkillsInput.split(',').map((s) => s.trim()).filter(Boolean)
+      : (expForm.skillsUsed || []);
+
     if (editingExpId) {
       setExperiences((prev) =>
         prev.map((x) =>
-          x.id === editingExpId ? ({ ...x, ...expForm } as Experience) : x
+          x.id === editingExpId ? ({ ...x, ...expForm, skillsUsed: skillsArr } as Experience) : x
         )
       );
       showToast('Pengalaman kerja diperbarui!');
@@ -580,7 +586,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         period: expForm.period || '2023 - Sekarang',
         location: expForm.location || 'Indonesia',
         description: expForm.description || '',
-        skillsUsed: expForm.skillsUsed || ['React'],
+        skillsUsed: skillsArr.length > 0 ? skillsArr : ['React'],
         type: expForm.type || 'Full-time',
       };
       setExperiences((prev) => [newExp, ...prev]);
@@ -588,6 +594,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     }
 
     setEditingExpId(null);
+    setExpSkillsInput('');
     setExpForm({
       role: '',
       company: '',
@@ -1976,6 +1983,36 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             />
                           </div>
 
+                          <div className="sm:col-span-2">
+                            <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                              Tag Keahlian / Software / Teknologi Proyek (Pisahkan dengan koma)
+                            </label>
+                            <input
+                              type="text"
+                              value={tagInput}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setTagInput(val);
+                                const arr = val.split(',').map((s) => s.trim()).filter(Boolean);
+                                setProjectForm({ ...projectForm, tags: arr });
+                              }}
+                              placeholder="cth: React, TypeScript, Next.js, Tailwind CSS, Redux, Jest"
+                              className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
+                            />
+                            {projectForm.tags && projectForm.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 mt-2">
+                                {projectForm.tags.map((tg, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-950/80 text-blue-900 dark:text-blue-300 text-xs font-semibold border border-blue-300/60 dark:border-blue-800/60"
+                                  >
+                                    {tg}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
                           <div className="sm:col-span-2 flex items-center gap-2 pt-1">
                             <input
                               type="checkbox"
@@ -2160,6 +2197,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
                           <div>
                             <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                              Lokasi (Kota / Negara / Remote)
+                            </label>
+                            <input
+                              type="text"
+                              value={expForm.location || ''}
+                              onChange={(e) =>
+                                setExpForm({ ...expForm, location: e.target.value })
+                              }
+                              placeholder="cth: Jakarta, Indonesia / Remote"
+                              className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
                               Tipe Pekerjaan
                             </label>
                             <select
@@ -2189,6 +2241,39 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                             />
                           </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                              Keahlian / Software / Tools yang Digunakan (Pisahkan dengan koma)
+                            </label>
+                            <input
+                              type="text"
+                              value={expSkillsInput}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setExpSkillsInput(val);
+                                const arr = val
+                                  .split(',')
+                                  .map((s) => s.trim())
+                                  .filter(Boolean);
+                                setExpForm({ ...expForm, skillsUsed: arr });
+                              }}
+                              placeholder="cth: React, TypeScript, Next.js, Tailwind CSS, Redux, Jest"
+                              className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
+                            />
+                            {expForm.skillsUsed && expForm.skillsUsed.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 mt-2">
+                                {expForm.skillsUsed.map((sk, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 text-xs font-semibold border border-amber-300/60 dark:border-amber-800/60"
+                                  >
+                                    {sk}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex items-center justify-end gap-2 pt-1">
@@ -2197,6 +2282,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               type="button"
                               onClick={() => {
                                 setEditingExpId(null);
+                                setExpSkillsInput('');
                                 setExpForm({
                                   role: '',
                                   company: '',
@@ -2235,13 +2321,26 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             <h5 className="font-bold text-sm text-gray-900 dark:text-white">
                               {x.role} <span className="font-normal text-xs text-gray-500">at {x.company}</span>
                             </h5>
-                            <p className="text-[11px] text-gray-500">{x.period} • {x.type}</p>
+                            <p className="text-[11px] text-gray-500">{x.period} • {x.location || 'Indonesia'} • {x.type}</p>
+                            {x.skillsUsed && x.skillsUsed.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-1.5">
+                                {x.skillsUsed.map((sk, sIdx) => (
+                                  <span
+                                    key={sIdx}
+                                    className="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[10px] font-semibold border border-amber-200/60 dark:border-amber-800/60"
+                                  >
+                                    {sk}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                           </div>
                           <div className="flex items-center gap-1">
                             <button
                               onClick={() => {
                                 setEditingExpId(x.id);
                                 setExpForm(x);
+                                setExpSkillsInput(x.skillsUsed ? x.skillsUsed.join(', ') : '');
                               }}
                               className="p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-lg"
                             >
