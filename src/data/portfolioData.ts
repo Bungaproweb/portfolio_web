@@ -26,6 +26,7 @@ export const profileData: Profile = {
   completedProjects: 35,
   happyClients: 24,
   satisfactionRate: '99.8%',
+  resumeUrl: 'https://drive.google.com',
 };
 
 export const skillsData: Skill[] = [

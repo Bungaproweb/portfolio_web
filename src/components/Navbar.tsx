@@ -233,6 +233,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <div className="pt-2 border-t border-stone-200 dark:border-stone-800 space-y-2">
                 <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-stone-200/70 dark:bg-stone-800/80 text-stone-800 dark:text-stone-200 text-xs font-semibold border border-stone-300/60 dark:border-stone-700/60"
+                >
+                  <span className="flex items-center gap-2">
+                    {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
+                    <span>{darkMode ? 'Mode Terang (Light Mode)' : 'Mode Gelap (Dark Mode)'}</span>
+                  </span>
+                  <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-stone-300 dark:bg-stone-700 text-stone-700 dark:text-stone-300">
+                    {darkMode ? 'Gelap' : 'Terang'}
+                  </span>
+                </button>
+
+                <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenAdmin();

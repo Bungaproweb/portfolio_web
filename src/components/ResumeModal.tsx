@@ -4,6 +4,7 @@ import {
   X,
   Printer,
   Download,
+  ExternalLink,
   Mail,
   Phone,
   MapPin,
@@ -11,6 +12,7 @@ import {
   GraduationCap,
   Award,
   Code,
+  FileText,
 } from 'lucide-react';
 import {
   Profile,
@@ -54,25 +56,37 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         className="bg-[#FAF7F2] dark:bg-[#12100E] rounded-3xl max-w-4xl w-full border border-stone-200 dark:border-stone-800 shadow-2xl overflow-hidden my-8 relative flex flex-col max-h-[90vh]"
       >
         {/* Sticky Header */}
-        <div className="p-6 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between bg-white/95 dark:bg-[#12100E]/95 backdrop-blur-md sticky top-0 z-10 print:hidden">
+        <div className="p-4 sm:p-6 border-b border-stone-200 dark:border-stone-800 flex flex-wrap items-center justify-between gap-3 bg-white/95 dark:bg-[#12100E]/95 backdrop-blur-md sticky top-0 z-10 print:hidden">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-lg text-stone-900 dark:text-stone-100">
+            <span className="font-bold text-base sm:text-lg text-stone-900 dark:text-stone-100">
               Curriculum Vitae (CV) - {profile.name}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {profile.resumeUrl && (
+              <a
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-800 to-amber-900 hover:from-amber-900 hover:to-amber-950 text-amber-50 text-xs font-semibold shadow-md flex items-center gap-1.5 transition-all border border-amber-700/50 active:scale-95"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>Buka / Unduh di Google Drive</span>
+              </a>
+            )}
+
             <button
               onClick={handlePrint}
-              className="px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-amber-50 text-xs font-semibold shadow-md flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 rounded-xl bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
             >
               <Printer className="w-4 h-4" />
-              <span>Cetak / Simpan PDF</span>
+              <span className="hidden sm:inline">Cetak / PDF</span>
             </button>
 
             <button
               onClick={onClose}
-              className="p-2.5 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white transition-colors"
+              className="p-2 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -80,7 +94,34 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         </div>
 
         {/* CV Printable Document Area */}
-        <div className="p-8 sm:p-12 space-y-8 overflow-y-auto bg-white text-stone-900 dark:bg-[#12100E] dark:text-stone-100 print:p-0 print:bg-white print:text-black">
+        <div className="p-6 sm:p-12 space-y-8 overflow-y-auto bg-white text-stone-900 dark:bg-[#12100E] dark:text-stone-100 print:p-0 print:bg-white print:text-black">
+          {/* Google Drive Direct Link Banner */}
+          {profile.resumeUrl && (
+            <div className="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 print:hidden">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-amber-800 text-amber-100 shrink-0">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-stone-900 dark:text-amber-200">
+                    Dokumen CV Resmi Google Drive
+                  </h4>
+                  <p className="text-xs text-stone-600 dark:text-amber-300/80">
+                    File dokumen CV asli dapat dibuka atau diunduh secara langsung dari Google Drive.
+                  </p>
+                </div>
+              </div>
+              <a
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-amber-50 text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 shrink-0 transition-transform active:scale-95"
+              >
+                <span>Lihat di Google Drive</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          )}
           {/* Header Info */}
           <div className="border-b border-stone-200 dark:border-stone-800 pb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div>

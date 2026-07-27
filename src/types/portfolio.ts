@@ -15,6 +15,7 @@ export interface Profile {
   completedProjects: number;
   happyClients: number;
   satisfactionRate: string;
+  resumeUrl?: string;
 }
 
 export interface Skill {

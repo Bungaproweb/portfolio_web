@@ -1302,6 +1302,28 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           />
                         </div>
 
+                        {/* Google Drive CV Link */}
+                        <div className="sm:col-span-2 p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 space-y-2">
+                          <label className="block text-xs font-bold text-amber-900 dark:text-amber-300 flex items-center justify-between">
+                            <span>📄 Link CV / Resume (Google Drive / URL File)</span>
+                            <span className="text-[10px] bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 px-2 py-0.5 rounded-full font-semibold">
+                              Google Drive Compatible
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            value={profileForm.resumeUrl || ''}
+                            onChange={(e) =>
+                              setProfileForm({ ...profileForm, resumeUrl: e.target.value })
+                            }
+                            placeholder="https://drive.google.com/file/d/12345.../view?usp=sharing"
+                            className="w-full px-3.5 py-2 rounded-xl border border-amber-300/80 dark:border-amber-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 font-mono text-xs"
+                          />
+                          <p className="text-[11px] text-amber-800 dark:text-amber-400 leading-relaxed">
+                            Tempelkan link Google Drive CV Anda di sini. Ketika pengunjung mengeklik tombol "Unduh CV", file CV Google Drive Anda akan langsung terbuka atau diunduh.
+                          </p>
+                        </div>
+
                         {/* STATS */}
                         <div className="sm:col-span-2 pt-2 border-t border-gray-200 dark:border-gray-800">
                           <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
